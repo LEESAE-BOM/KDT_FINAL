@@ -54,6 +54,7 @@ dependencies:
   flip_card: ^0.6.0
   firebase_core: ^2.2.0
   cloud_firestore: ^4.0.5
+  glitters: ^0.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -120,3 +121,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: 'Goyang'
+      fonts:
+        - asset: assets/Fonts/Goyang.ttf
+    - family: 'Nanum'
+      fonts:
+        - asset: assets/Fonts/NanumSquareRoundR.ttf
+    - family: 'Jalnan'
+      fonts:
+        - asset: assets/Fonts/Jalnan.ttf

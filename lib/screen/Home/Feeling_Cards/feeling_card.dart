@@ -28,41 +28,46 @@ class _GridviewPageState extends State<EmotionCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: GridView.count(
-        crossAxisCount: 2,
-        //1 개의 행에 보여줄 item 개수
-        childAspectRatio: 2 / 3,
-        //item 의 가로 1, 세로 2 의 비율
-        mainAxisSpacing: 10,
-        //수평 Padding
-        crossAxisSpacing: 10,
-        //수직 Padding
-        children: List.generate(8, (index) {
-          //item 의 반목문 항목 형성
-          return Container(
-              child: FlipCard(
-                direction: FlipDirection.HORIZONTAL,
-                front: Material(
-                  color: Colors.white.withOpacity(0.8),
-                  borderRadius: BorderRadiusDirectional.circular(30.0),
-                  child: Image.asset(
-                    emotionItem.elementAt(index)['image']!,
-                  ),
-                ),
-                back: Material(
-                  color: Colors.white.withOpacity(0.6),
-                  borderRadius: BorderRadiusDirectional.circular(30.0),
-                  child: Center(
-                    child: Text(
-                        style: textTheme().bodyText2?.copyWith(
-                            color: kTextColor,
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      emotionItem.elementAt(index)['name']!,
+      body: ColoredBox(
+        color: kBackColor,
+        child: GridView.count(
+          crossAxisCount: 2,
+          //1 개의 행에 보여줄 item 개수
+          childAspectRatio: 2 / 3,
+          //item 의 가로 1, 세로 2 의 비율
+          mainAxisSpacing: 10,
+          //수평 Padding
+          crossAxisSpacing: 10,
+          //수직 Padding
+          children: List.generate(8, (index) {
+            //item 의 반목문 항목 형성
+            return Container(
+                child: FlipCard(
+                  direction: FlipDirection.HORIZONTAL,
+                  front: Material(
+                    shadowColor: kBlue,
+                    elevation: 7,
+                    color: Colors.white.withOpacity(1),
+                    borderRadius: BorderRadiusDirectional.circular(30.0),
+                    child: Image.asset(
+                      emotionItem.elementAt(index)['image']!,
                     ),
                   ),
-                ),
-              ));
-        }),
+                  back: Material(
+                    color: Colors.white.withOpacity(0.6),
+                    borderRadius: BorderRadiusDirectional.circular(30.0),
+                    child: Center(
+                      child: Text(
+                          style: textTheme().bodyText2?.copyWith(
+                              color: kTextColor,
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        emotionItem.elementAt(index)['name']!,
+                      ),
+                    ),
+                  ),
+                ));
+          }),
+        ),
       ),
     );
   }

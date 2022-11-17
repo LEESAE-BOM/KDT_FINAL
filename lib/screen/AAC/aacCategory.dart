@@ -11,8 +11,7 @@ import 'package:KDT_SENTIMENTO/screen/AAC/aacScreen_fb.dart';
 
 class AacCategory extends StatefulWidget {
   // const AacScreen({Key? key}) : super(key: key);
-  AacCategory({Key? key, required this.title,}) : super(key: key);
-  final String title;
+  AacCategory({Key? key,}) : super(key: key);
 
   @override
   _AacCategory createState() => _AacCategory();
@@ -65,11 +64,10 @@ class _AacCategory extends State<AacCategory> {
                     margin: index % 2 == 0
                         ? const EdgeInsets.fromLTRB(10, 1, 10, 1)
                         : const EdgeInsets.fromLTRB(0, 1, 5, 1),
-                    color: kPink,
+                    color: kBlue,
                     child: Column(
                         children: <Widget>[
-                          Expanded(
-                          child: Container(
+                          Container(
                               width: MediaQuery.of(context).size.width / 3,
                               height: MediaQuery.of(context).size.width / 4,
                               margin: EdgeInsets.fromLTRB(1, 30, 1, 10),
@@ -78,10 +76,17 @@ class _AacCategory extends State<AacCategory> {
                                   cateIcon.elementAt(index)['icon']!,
                                 ),
                               )
-                          ),),
+                          ),
                           Align(
                               alignment: Alignment.bottomCenter,
-                              child: Text(cateIcon.elementAt(index)['name']!,),
+                              child: Text(
+                                cateIcon.elementAt(index)['name']!,
+                                style: TextStyle(
+                                  fontFamily: 'Nanum',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextColor,
+                                )),
                           )
                         ]
                     )

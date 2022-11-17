@@ -7,5 +7,6 @@ const kYellow = Color.fromRGBO(255, 217, 102, 1.0);
 const kPurple = Color.fromRGBO(220, 185, 255, 1.0);
 const kGreen = Color.fromRGBO(169, 209, 142, 1.0);
 const kPink = Color.fromRGBO(238, 161, 181, 1.0);
-const kBackColor = Color(0xFFECECEC);
+const kBlue = Color.fromRGBO(240, 247, 253, 1.0);
 const kW = Color(0xFFFFFFFF);
+const kBackColor = Color.fromRGBO(245, 248, 252, 1.0);
