@@ -18,7 +18,6 @@ class speakingMenu extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +31,7 @@ class speakingMenu extends StatelessWidget {
             ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: kPurple,
+                  primary: kW,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
 
@@ -45,11 +44,11 @@ class speakingMenu extends StatelessWidget {
                 },
                 child: Text("안녕하세요",
                   style:  textTheme().bodyText2?.copyWith(
-                      color: Colors.white,
+                      color: Colors.blue,
                       fontSize: 20,fontWeight: FontWeight.bold),)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: kPurple,
+                  primary: kW,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
                   ),
@@ -61,11 +60,11 @@ class speakingMenu extends StatelessWidget {
                 },
                 child: Text("감사합니다",
                   style: textTheme().bodyText2?.copyWith(
-                      color: Colors.white,
+                      color: Colors.blue,
                       fontSize: 20,fontWeight: FontWeight.bold),)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: kPurple,
+                  primary: kW,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
                   ),
@@ -77,11 +76,11 @@ class speakingMenu extends StatelessWidget {
                 },
                 child: Text("미안합니다",
                     style: textTheme().bodyText2?.copyWith(
-                        color: Colors.white,
+                        color: Colors.blue,
                         fontSize: 20,fontWeight: FontWeight.bold),)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: kPurple,
+                  primary: kW,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
                   ),
@@ -93,7 +92,7 @@ class speakingMenu extends StatelessWidget {
                 },
                 child: Text("반갑습니다",
                     style: textTheme().bodyText2?.copyWith(
-                        color: Colors.white,
+                        color: Colors.blue,
                         fontSize: 20, fontWeight: FontWeight.bold),)),
           ],
         ),
