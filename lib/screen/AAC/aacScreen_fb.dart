@@ -276,7 +276,7 @@ class _AacScreenfb extends State<AacScreenfb> {
                                       text: docs.elementAt(idx).elementAt(index)['name']!,
                                       style: textTheme().headline1?.copyWith(
                                           color: kTextColor,
-                                          fontSize: 20
+                                          fontSize: 17.5
                                       ))),
 
                             ]
