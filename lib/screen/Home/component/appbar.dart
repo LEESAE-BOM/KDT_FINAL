@@ -28,6 +28,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: (){
+            Navigator.popUntil(context, ModalRoute.withName("/"));
             Navigator.push(context,
                 MaterialPageRoute(builder: ((context) => MainScreen())));
           },
