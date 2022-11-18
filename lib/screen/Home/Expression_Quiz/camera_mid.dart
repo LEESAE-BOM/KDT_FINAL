@@ -8,6 +8,7 @@ import './ml/classifier_emotion.dart';
 import 'package:logger/logger.dart';
 import '../../../constants.dart';
 import '../../../theme.dart';
+import './quiz_mid.dart';
 
 class camera2 extends StatefulWidget {
   camera2({Key? key, this.title}) : super(key: key);
@@ -30,12 +31,15 @@ class _camera2 extends State<camera2> {
   PickedFile? pickedFile;
   img.Image? fox;
   Uint8List? imageData;
+  String? imgsrc;
   var category;
   PickedFile? imagePath;
 
-  var emo_list = ['행복한', '슬픈','화난','무서운'];
-  var emo_list2 = ['happy', 'sad','angry','fear'];
+  var emo_list = ['행복한', '슬픈','무서운','화난'];
+  var emo_list2 = ['happy', 'sad','fear','angry'];
   var random = Random().nextInt(4);
+
+  var point = 0;
 
   @override
   void initState() {
@@ -45,8 +49,7 @@ class _camera2 extends State<camera2> {
 
   Future getImage() async {
     pickedFile = await picker.getImage(source: ImageSource.camera,
-      imageQuality: 55,
-    );
+      imageQuality: 55,);
 
     setState(() {
       _image = File(pickedFile!.path);
@@ -54,6 +57,21 @@ class _camera2 extends State<camera2> {
       imagePath = pickedFile!;
       imageData = _image!.readAsBytesSync();
       _predict();
+      _fake();
+      // print(this.category);
+    });
+  }
+  Future getImage_v() async {
+    pickedFile = await picker.getImage(source: ImageSource.gallery,
+      imageQuality: 55,);
+
+    setState(() {
+      _image = File(pickedFile!.path);
+      _imageWidget = Image.file(_image!);
+      imagePath = pickedFile!;
+      imageData = _image!.readAsBytesSync();
+      _predict();
+      _fake();
       // print(this.category);
     });
   }
@@ -64,6 +82,12 @@ class _camera2 extends State<camera2> {
 
     setState(() {
       this.category = pred;
+    });
+  }
+  void _fake() async {
+    var pred2 = await _mlService.convertdeepfake(pickedFile!.path);
+    setState(() {
+      this.imgsrc = pred2;
     });
   }
 
@@ -92,17 +116,46 @@ class _camera2 extends State<camera2> {
               SizedBox(
                 height: 36,
               ),
-              ElevatedButton.icon(
-                onPressed:getImage,
-                icon:  Icon(Icons.add_a_photo),
-                label: Text("사진을 촬영해 주세요!",style: textTheme().headline2?.copyWith(
-                    fontSize: 25,fontWeight: FontWeight.bold),),
-                style: ElevatedButton.styleFrom(primary: kPrimaryColor),
-              ),
+              Center(child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(width:20),
+                    FloatingActionButton(
+                      backgroundColor: Colors.blueGrey,
+                      onPressed: getImage,
+                      tooltip: 'Pick Image',
+                      child: Icon(Icons.add_a_photo),
+                    ),
+                    SizedBox(width:60),
+                    FloatingActionButton(
+                      backgroundColor: Colors.blueGrey,
+                      onPressed: getImage_v,
+                      tooltip: 'Pick Image',
+                      child: Icon(Icons.photo_library_sharp),
+                    ),
+
+                  ]
+              )),
               SizedBox(
-                height: 36,
+                height: 25,
               ),
               Answer(category,emo_list2[random])
+              ,SizedBox(
+                height: 25,
+              ),
+              ElevatedButton.icon(
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 30,
+                ),
+                onPressed: (){Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => expressLearn2(imgsrc: imgsrc, point: point, answer: random,)),
+                );},
+                label: Text('다음'),
+                style: ElevatedButton.styleFrom(primary: Colors.blueAccent),
+
+              )
             ],
           ),
         )
@@ -122,7 +175,8 @@ class _camera2 extends State<camera2> {
           ),
         ),
       );
-    } else if (imageData.length == 0) {
+    }
+    else if (imageData.length == 0) {
       return Center(
         child: Column(
           children: [
@@ -134,7 +188,8 @@ class _camera2 extends State<camera2> {
           ],
         ),
       );
-    } else {
+    }
+    else {
       return Image.memory(
         imageData,
         fit: BoxFit.fitWidth,
@@ -154,12 +209,15 @@ class _camera2 extends State<camera2> {
       );
     }
     else if (category == emotion) {
+      setState(() {
+        this.point = 10;
+      });
       return Center(
           child: Text.rich(
             TextSpan(
               text: '정답입니다!',
               style: textTheme().headline1?.copyWith(
-                  color: kPurple,fontSize: 30,fontWeight: FontWeight.bold),
+                  color: kTextColor,fontSize: 30,fontWeight: FontWeight.bold),
             ),
           )
       );
@@ -170,7 +228,7 @@ class _camera2 extends State<camera2> {
             TextSpan(
               text: '오답입니다!',
               style: textTheme().headline1?.copyWith(
-                  color: kPurple,fontSize: 30,fontWeight: FontWeight.bold),
+                  color: kTextColor,fontSize: 30,fontWeight: FontWeight.bold),
             ),
           )
       );
