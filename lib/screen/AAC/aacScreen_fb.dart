@@ -14,6 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../Home/component/appbar.dart';
 import '../Home/component/drawer.dart';
+import '../../theme.dart';
 
 class AacScreenfb extends StatefulWidget {
   // const AacScreen({Key? key}) : super(key: key);
@@ -194,7 +195,7 @@ class _AacScreenfb extends State<AacScreenfb> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
         drawer: MainDrawer(
         ),
         appBar: MainAppBar(appBar: AppBar()),
@@ -208,13 +209,25 @@ class _AacScreenfb extends State<AacScreenfb> {
           crossAxisSpacing: 0,
           //수직 Padding
           children: List.generate(docs.elementAt(idx).length, (index) {
-            () => {getDocFromServer(index)};
+                () => {getDocFromServer(index)};
             //item 의 반목문 항목 형성
             return Container(////////////////////////////////////////////////////
               margin: index % 2 == 0
-                  ? const EdgeInsets.fromLTRB(10, 5, 10, 5)
-                  : const EdgeInsets.fromLTRB(0, 5, 10, 5),
-              color: Colors.brown.shade100,
+                  ? const EdgeInsets.fromLTRB(20, 20, 10, 1)
+                  : const EdgeInsets.fromLTRB(10, 20, 20, 1),
+              // color: kW,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: kW,
+                boxShadow : [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2, // 그림자가 어디까지 퍼질지
+                    blurRadius: 8, // 바깥으로 갈 수록 옅어지는
+                    offset: Offset(1, 1), // changes position of shadow 오른쪽, 아래 방향 x, y
+                  ),
+                ],
+              ),
               child: Column(
                   children: <Widget>[
                     Align(
@@ -234,71 +247,78 @@ class _AacScreenfb extends State<AacScreenfb> {
                         child: Center(
                           child: docs.elementAt(idx).elementAt(index)['img'] == ''
                               ? Image.network(
-                                  'https://' + currentCard['accImg']!,
-                                  errorBuilder:
-                                    (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                      return Image.asset(docs.elementAt(idx).elementAt(index)['icon']!);
-                                    },
+                            'https://' + currentCard['accImg']!,
+                            errorBuilder:
+                                (BuildContext context, Object exception, StackTrace? stackTrace) {
+                              return Image.asset(docs.elementAt(idx).elementAt(index)['icon']!);
+                            },
                           )
                               : Image.file(pickImg[docs.elementAt(idx).elementAt(index)['img']!]),
                         ),
                       ),
                     ),
 
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Row(
-                          mainAxisSize : MainAxisSize.max,
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                tts.setVolume(0.7);
-                                tts.speak(docs.elementAt(idx).elementAt(index)['name']!); // currentCard['accName']!
-                              },
-                              tooltip: '어떻게 발음하는지 들어봐!',
-                              icon: Icon(Icons.volume_up),
-                            ),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                            mainAxisSize : MainAxisSize.max,
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () {
+                                  tts.setVolume(0.7);
+                                  tts.speak(docs.elementAt(idx).elementAt(index)['name']!); // currentCard['accName']!
+                                },
+                                tooltip: '어떻게 발음하는지 들어봐!',
+                                icon: Icon(Icons.volume_up),
+                              ),
+                              Text.rich(
+                                  TextSpan(
+                                      text: docs.elementAt(idx).elementAt(index)['name']!,
+                                      style: textTheme().headline1?.copyWith(
+                                          color: kTextColor,
+                                          fontSize: 20
+                                      ))),
 
-                            Text(
-                                docs.elementAt(idx).elementAt(index)['name']! // // currentCard['accName']!
-                            )
-                          ]
-                      )
+                            ]
+                        )
                     ),
                   ]),
 
             );
           }),
         ),
-          bottomNavigationBar:BottomNavigationBar(
+        bottomNavigationBar:SizedBox(
+          height: 75,
+          child: BottomNavigationBar(
+            elevation: 10,
+            backgroundColor: Color.fromRGBO(245, 249, 255, 1),
             type: BottomNavigationBarType.fixed,
-            unselectedItemColor: Colors.pink.shade100,
+            unselectedItemColor: Colors.black26,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: selectedIndex,
-            selectedItemColor: Colors.pink.shade200,
+            selectedItemColor: Colors.blueGrey,
             onTap: (i) {
-              setState((){
+              setState(() {
                 selectedIndex = i;
                 print(i);
               });
             },
-            items: <BottomNavigationBarItem>[
+            items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.edit),
-                // color: Color.fromRGBO(226, 167, 194, 1.0),)),
+                icon: Icon(Icons.home_filled),
                 label: "홈",
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.question_answer_rounded),
-                  //color: Color.fromRGBO(226, 167, 194, 1.0),)),
                   label: "AAC"),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
-                //color: Color.fromRGBO(226, 167, 194, 1.0),)),
-                label: "설정",),
+                label: "설정",
+              ),
             ],
-          )
-      );
+          ),
+        )
+    );
   }
 }

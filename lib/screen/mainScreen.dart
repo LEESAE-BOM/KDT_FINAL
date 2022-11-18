@@ -17,7 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 0;
-  List pages = [Home(), AacCategory(), Setting()];
+  List pages = [Home(), AacCategoryfb(title: 'aacScreen',), Setting()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
             },
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.edit),
+                icon: Icon(Icons.home_filled),
                 label: "홈",
               ),
               BottomNavigationBarItem(

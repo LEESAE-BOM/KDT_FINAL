@@ -8,6 +8,7 @@ import 'package:KDT_SENTIMENTO/constants.dart';
 import 'package:KDT_SENTIMENTO/screen/AAC/aac.dart';
 import 'package:KDT_SENTIMENTO/screen/AAC/aacScreen_fb.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../theme.dart';
 
 
 class AacCategoryfb extends StatefulWidget {
@@ -91,12 +92,12 @@ class _AacCategoryfb extends State<AacCategoryfb> {
           //1 개의 행에 보여줄 item 개수
           childAspectRatio: 1 / 1,
           //item 의 가로 1, 세로 2 의 비율
-          mainAxisSpacing: 10,
+          mainAxisSpacing: 0,
           //수평 Padding
           crossAxisSpacing: 0,
           //수직 Padding
           children: List.generate(6, (index) {
-            () => {getDocFromServer(index)};
+                () => {getDocFromServer(index)};
             //item 의 반목문 항목 형성
             return InkWell(
                 onTap: () {
@@ -107,29 +108,54 @@ class _AacCategoryfb extends State<AacCategoryfb> {
                 },
                 child: Container(///////////////////////////////////////////////
                     margin: index % 2 == 0
-                        ? const EdgeInsets.fromLTRB(10, 1, 10, 1)
-                        : const EdgeInsets.fromLTRB(0, 1, 5, 1),
-                    color: kPink,
+                        ? const EdgeInsets.fromLTRB(20, 20, 10, 1)
+                        : const EdgeInsets.fromLTRB(10, 20, 20, 1),
+                    // color: kW,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: kW,
+                      boxShadow : [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2, // 그림자가 어디까지 퍼질지
+                          blurRadius: 8, // 바깥으로 갈 수록 옅어지는
+                          offset: Offset(1, 1), // changes position of shadow 오른쪽, 아래 방향 x, y
+                        ),
+                      ],
+                    ),
+
                     child: Column(
                         children: <Widget>[
                           Expanded(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width / 3,
-                              height: MediaQuery.of(context).size.height / 4,
-                              margin: EdgeInsets.fromLTRB(1, 30, 1, 10),
-                              child: Center(
-                                child: Image.network(
-                                  'https://' + currentCard['accImg']!,
-                                  errorBuilder:
-                                      (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                    return Image.asset(cateList.elementAt(index)['icon']!);
-                                  },
-                                ),
-                              )
-                          ),),
+                            child: Container(
+                                width: MediaQuery.of(context).size.width / 3,
+                                height: MediaQuery.of(context).size.height / 4,
+                                margin: EdgeInsets.fromLTRB(1, 30, 1, 10),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: Image.network(
+                                      'https://' + currentCard['accImg']!,
+                                      errorBuilder:
+                                          (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                        return Image.asset(cateList.elementAt(index)['icon']!);
+                                      },
+                                    ),
+                                  ),
+                                )
+                            ),),
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: Text(cateList.elementAt(index)['name']!), // currentCard['accName']!
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text.rich(
+                                  TextSpan(
+                                      text: cateList.elementAt(index)['name']!,
+                                      style: textTheme().headline1?.copyWith(
+                                          color: kTextColor,
+                                          fontSize: 20
+                                      ))),
+                            ), // currentCard['accName']!
                           )
                         ]
                     )
